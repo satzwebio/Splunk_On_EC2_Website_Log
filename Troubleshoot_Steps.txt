@@ -1,0 +1,56 @@
+If you're seeing the default Red Hat page instead of your custom index.html when accessing the public IP, it means that the default configuration for Apache on your RHEL server is taking precedence.
+
+Here are some steps to troubleshoot and resolve the issue:
+After making any of these changes, restart the Apache service, so you can refresh the browser and check the page is accessible
+sudo systemctl restart httpd
+
+1. Check Apache Configuration:
+Verify that your custom index.html file is in the correct directory (/var/www/html). Also, make sure that the Apache configuration points to the right directory.
+
+2. Apache DocumentRoot Configuration:
+Open the Apache configuration file (httpd.conf) or the virtual host configuration file for your site. Look for the DocumentRoot directive and make sure it points to /var/www/html.
+grep -E '^DocumentRoot' /etc/httpd/conf/httpd.conf
+If needed, you can edit the configuration file to set the correct document root.
+
+3. Restart Apache:
+After making changes to the configuration, restart the Apache service to apply the changes.
+sudo systemctl restart httpd
+
+4. Firewall Configuration:
+Ensure that the firewall allows traffic on port 80. If you're accessing the server from an external source, you may need to adjust the firewall settings.
+sudo firewall-cmd --permanent --add-service=http
+sudo firewall-cmd --reload
+
+5. Check Directory and File Permissions:
+Ensure that the directory (/var/www/html) and the index.html file have the correct permissions for Apache to read.
+sudo chown -R apache:apache /var/www/html
+
+6. Browser Cache:
+Clear your browser cache or try accessing the page in an incognito/private window to rule out any caching issues.
+
+
+7. Check the Apache error logs (/var/log/httpd/error_log) for any error messages that might provide further insight into the problem.If you see error like "search permissions are missing on a component of the path." Here's how you can address this issue:
+
+a. Check Directory Permissions:
+Ensure that both the directory /var/www and /var/www/html have the appropriate permissions for Apache to access them.
+sudo chmod +x /var/www
+sudo chmod +x /var/www/html
+The +x flag adds execute (search) permissions.
+
+b. Check SELinux Context:
+If SELinux is enforcing on your system, you might need to set the correct SELinux context for the directories.
+sudo chcon -R --reference=/var/www /var/www/html
+
+c.Verify User and Group Ownership:
+Ensure that the Apache process has the necessary permissions by verifying the user and group ownership of the directories and files.
+sudo chown -R apache:apache /var/www
+Replace "apache" with the appropriate user and group if it's different on your system.
+
+
+d. SELinux Context:
+If SELinux is enforcing, make sure the SELinux context is correctly set for the /var/www/html directory and its contents.
+
+sudo chcon -R --reference=/var/www /var/www/html
+chcon: This command is used to change the SELinux context of files or directories.
+
+By executing this command, you ensured that the SELinux context of your web server files under /var/www/html matches the context of /var/www, resolving the permission issue you encountered when accessing your custom index.html file through Apache.
