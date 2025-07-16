@@ -9,7 +9,7 @@ This project provides a step-by-step guide to set up Splunk monitoring on a Red 
 
 ## Architecture
 
-![Splunk Architecture](splunk_arch.png)
+![Splunk Architecture](Splunk_Arch.png)
 
 *If the image does not display, ensure `splunk_arch.png` is present in the project root. For more architecture diagrams, refer to the PDF.*
 
