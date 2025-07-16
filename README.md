@@ -7,6 +7,12 @@ This project provides a step-by-step guide to set up Splunk monitoring on a Red 
 - **Goal:** Deploy Splunk Universal Forwarder on a RHEL EC2 instance to forward website logs to a Splunk server for monitoring and analysis.
 - **Use Case:** Centralized log management and real-time monitoring of website activity hosted on AWS EC2.
 
+## Architecture
+
+![Splunk Architecture](splunk_arch.png)
+
+*If the image does not display, ensure `splunk_arch.png` is present in the project root. For more architecture diagrams, refer to the PDF.*
+
 ## Prerequisites
 
 - AWS account with permissions to launch and manage EC2 instances.
